@@ -12,7 +12,17 @@
 </template>
 <script>
 export default {
-  props: ['item'] // 子组件显示的用props选项声明它期待获得的数据
+  props: {
+    item: {
+      type: Object,
+      default: () => {
+        return {
+          checked: false,
+          text: 'hello, world'
+        }
+      }
+    }
+  }
 }
 </script>
 <style lang="less">

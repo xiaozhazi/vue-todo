@@ -1,2 +1,2 @@
-import Mock from './mock'
-Mock.start()
+import mock from './mock'
+export default mock

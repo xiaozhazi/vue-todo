@@ -15,8 +15,11 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "coffescript": "0.0.1-security",
+    "mock": "^0.1.1",
     "mockjs": "^1.0.1-beta3",
-    "vue": "^2.5.2",
+    "socks": "^2.2.0",
+    "vue": "^2.5.16",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

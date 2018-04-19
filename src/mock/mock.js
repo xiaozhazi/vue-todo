@@ -21,7 +21,7 @@ export default {
             return false
           }).length,
           locked: todo.locked,
-          isDeleted: todo.isDelete
+          isDelete: todo.isDelete
         }
       }).filter(todo => {
         if (todo.isDelete === true) return false
@@ -66,6 +66,66 @@ export default {
           resolve([200, {
             todo: todo
           }])
+        }, 200)
+      })
+    })
+    // 新增一条代办事项
+    mock.onPost('/todo/addRecord').reply(config => {
+      let {
+        id,
+        text
+      } = JSON.parse(config.data)
+      Todos.some((t, index) => {
+        if (t.id === id) {
+          t.record.push({
+            text: text,
+            isDelete: false,
+            checked: false
+          })
+          return true
+        }
+      })
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200])
+        }, 200)
+      })
+    })
+    // 修改标题
+    mock.onPost('/todo/editTodo').reply(config => {
+      let {
+        todo
+      } = JSON.parse(config.data)
+      Todos.some((t, index) => {
+        if (t.id === todo.id) {
+          t.title = todo.title
+          t.locked = todo.locked
+          t.isDelete = todo.isDelete
+          return true
+        }
+      })
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200])
+        }, 200)
+      })
+    })
+    // 修改标题
+    mock.onPost('/todo/editRecord').reply(config => {
+      let {
+        id,
+        record,
+        index
+      } = JSON.parse(config.data)
+      Todos.some((t) => {
+        if (t.id === id) {
+          t.record[index] = record
+          return true
+        }
+      })
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve([200])
         }, 200)
       })
     })

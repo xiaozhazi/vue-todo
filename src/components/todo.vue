@@ -28,12 +28,15 @@
       </div>
     </nav>
     <div class="content-scrollable list-items">
+      <div v-for="item in items">
+        <item :item="item"></item>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import item from './item'
-import { getTodo } from '../api/api'
+import { getTodo, addRecord } from '../api/api'
 export default {
   data () {
     return {
@@ -48,6 +51,38 @@ export default {
   },
   components: {
     item
+  },
+  watch: {
+    '$route.params.id' () {
+      this.init()
+    }
+  },
+  created () {
+    this.init()
+  },
+  methods: {
+    init () {
+    // 获取到$route.params.id,即我们在menus.vue组件中传入的数据
+      const ID = this.$route.params.id
+      getTodo({ id: ID }).then(res => {
+        let { id, title, count, isDelete, locked, record } = res.data.todo
+        this.items = record
+        this.todo = {
+          id: id,
+          title: title,
+          count: count,
+          isDelete: isDelete,
+          locked: locked
+        }
+      })
+    },
+    onAdd () {
+      const ID = this.$route.params.id
+      addRecord({ id: ID, text: this.text }).then(res => {
+        this.text = ''
+        this.init()
+      })
+    }
   }
 }
 </script>
